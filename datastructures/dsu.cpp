@@ -1,12 +1,10 @@
-struct dsu {
+struct DSU {
 	vector<int> parent;
 	vector<int> setsize;
 
-	dsu(int n) {
+	DSU(int n) {
 		parent = vector<int>(n);
-		for (int i = 0; i < n; i++) {
-			parent[i] = i;
-		}
+		iota(parent.begin(), parent.end(), 0);
 		setsize = vector<int>(n, 1);
 	}
 
@@ -20,7 +18,7 @@ struct dsu {
 		return find(n1) == find(n2);
 	}
 
-	void unite(int n1, int n2) {
+	bool unite(int n1, int n2) {
 		int p1 = find(n1);
 		int p2 = find(n2);
 		if (p1 != p2) {
@@ -28,6 +26,8 @@ struct dsu {
 				swap(p1, p2);
 			setsize[p1] += setsize[p2];
 			parent[p2] = p1;
+			return true;
 		}
+		return false;
 	}
 };
