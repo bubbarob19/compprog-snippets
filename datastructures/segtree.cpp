@@ -28,7 +28,7 @@ template<class B> struct SegTree : public B {
 		return tree[i + n];
 	}
 
-	void update(int i, int val) {
+	void update(int i, T val) {
 		i += n; tree[i] = val;
 		for (i >>= 1; i >= 1; i >>= 1)
 			tree[i] = B::merge(tree[2*i], tree[2*i+1]);
