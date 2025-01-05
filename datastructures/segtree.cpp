@@ -4,24 +4,25 @@ template<class B> struct SegTree : public B {
 	size_t n; vector<T> tree;
 
 	SegTree(vector<T>& data) {
-		n = data.size();
+		n = 1 << (32 - __builtin_clz(data.size()));
 		tree = vector<T>(n * 2, B::base);
 		buildTree(data);
 	}
 
-	SegTree(size_t n) : n(n) {
+	SegTree(size_t sz) {
+		n = 1 << (32 - __builtin_clz(sz));
 		tree = vector<T>(n * 2, B::base);
 	}
 
 	T query(int l, int r) {
 		l += n; r += n;
-		T ans = B::base;
+		T left = B::base, right = B::base;
 		while (l <= r) {
-			if (l % 2 == 1) ans = B::merge(ans, tree[l++]);
-			if (r % 2 == 0) ans = B::merge(ans, tree[r--]);
+			if (l % 2 == 1) left = B::merge(left, tree[l++]);
+			if (r % 2 == 0) right = B::merge(tree[r--], right);
 			l >>= 1; r >>= 1;
 		}
-		return ans;
+		return B::merge(left, right);
 	}
 
 	T get(int i) {
@@ -40,28 +41,4 @@ template<class B> struct SegTree : public B {
 		for (int i = n-1; i >= 1; i--)
 			tree[i] = B::merge(tree[2*i], tree[2*i+1]);
 	}
-};
-
-struct AddInt {
-	using T = int;
-	const T base = 0;
-	T merge(T a, T b) { return a + b; }
-};
-
-struct MinInt {
-	using T = int;
-	const T base = numeric_limits<int>::max();
-	T merge(T a, T b) { return min(a, b); }
-};
-
-struct MaxInt {
-	using T = int;
-	const T base = numeric_limits<int>::min();
-	T merge(T a, T b) { return max(a, b); }
-};
-
-struct XorInt {
-	using T = int;
-	const T base = 0;
-	T merge(T a, T b) { return a ^ b; }
 };
