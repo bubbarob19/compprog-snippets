@@ -4,6 +4,16 @@ https://codeforces.com/profile/bubbarob19
 
 Problems Authored:
 
+https://codeforces.com/gym/106457/problem/F
+
+https://codeforces.com/gym/106421/problem/D
+
+https://codeforces.com/gym/106386/problem/C
+
+https://codeforces.com/gym/106363/problem/A
+
+https://codeforces.com/gym/106188/problem/A
+
 https://codeforces.com/gym/106145/problem/D
 
 https://codeforces.com/gym/106123/problem/E
